@@ -30,19 +30,19 @@ contract Ownable {
 
 
 contract ArtGallery is Ownable {
-               /* stuff and mapping  */
+
+    address public Gallery = this;
+
+           /* stuff and mapping  */
+    
     mapping ( bytes32 => address) public ArtList;
-/* the mapping map an identifier (bytes32) to an address. 
+/* the mapping maps an identifier (bytes32) to an address. 
 Use sha3 for identifier ex:
 "numéro de série: 0001; date de fabrication: 09082016;Lieu de fabrication: 75017PARIS"
 sha3(00010908201675017PARIS)=
 15905d14d04be568d5e263a664721065a484ffe9c94b474947d601468b2ea744
 We then deploy a contract ArtCertificate for that identifier and log the address*/
 
-
-
-/*  //if(!_MechsList.isMech.gas(1000)(msg.sender)) throw; */
-    
             /*event for the logs*/
 
 event ArtAdded(bytes32 identifier, address ArtCertificateAddress, string description);
@@ -62,6 +62,7 @@ function addArt(
 /* verify if the identifier is not already mapped */
 if (ArtList[_identifier] != 0x0){throw;}
     address _newArtCertificate = new ArtCertificate(
+    Gallery,
     _identifier,
     _ArtistName,
     _ArtWorkTitle,
@@ -74,6 +75,7 @@ if (ArtList[_identifier] != 0x0){throw;}
 }
 
 contract ArtCertificate is Ownable{
+    address public ArtGallery;
     bytes32 public identifier;
     string public ArtistName;
     string public ArtWorkTitle;
@@ -89,12 +91,14 @@ contract ArtCertificate is Ownable{
     Methods
     */
     function ArtCertificate(
+    address _ArtGallery,
     bytes32 _identifier,
     string _ArtistName,
     string _ArtWorkTitle,
     string _Description,
     string _ArtWorkDate,
     address _newOwner){
+    ArtGallery = _ArtGallery;
     identifier=_identifier;
     ArtistName=_ArtistName;
     ArtWorkTitle=_ArtWorkTitle;
