@@ -126,9 +126,21 @@ if (ArtList[_identifier] == 0x0){throw;}
     
 }
 
+/*
+ * ArtCertificate
+    /\__/\
+   /`    '\
+ === 0  0 ===
+   \  --  /
+  /        \
+ /          \
+|            |
+ \  ||  ||  /
+  \_oo__oo_/#######o
+ */
 
 contract ArtCertificate is Ownable{
-    address public ArtGallery;
+    address public CertificateOrigin;
     bytes32 public identifier;
     string public ArtistName;
     string public ArtWorkTitle;
@@ -151,7 +163,7 @@ contract ArtCertificate is Ownable{
     string _Description,
     string _ArtWorkDate,
     address _newOwner){
-    ArtGallery = _ArtGallery;
+    CertificateOrigin = _ArtGallery;
     identifier=_identifier;
     ArtistName=_ArtistName;
     ArtWorkTitle=_ArtWorkTitle;
