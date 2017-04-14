@@ -146,9 +146,7 @@ contract ArtCertificate is Ownable{
     string public ArtWorkTitle;
     string public Description;
     string public ArtWorkDate;
-    // CertificateNumber is the address of the contract i.e 
-    // address public CertificateNumber = this;
-    
+   
     // string public number of copy;
     // string public serial number;
 
