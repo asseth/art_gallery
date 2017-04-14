@@ -156,19 +156,20 @@ contract ArtCertificate is Ownable{
     Methods
     */
     function ArtCertificate(
-    address _ArtGallery,
-    bytes32 _identifier,
-    string _ArtistName,
-    string _ArtWorkTitle,
-    string _Description,
-    string _ArtWorkDate,
-    address _newOwner){
-    CertificateOrigin = _ArtGallery;
-    identifier=_identifier;
-    ArtistName=_ArtistName;
-    ArtWorkTitle=_ArtWorkTitle;
-    Description=_Description;
-    ArtWorkDate=_ArtWorkDate;
-    transferOwnership(_newOwner);
-    }
+                            address _ArtGallery,
+                            bytes32 _identifier,
+                            string _ArtistName,
+                            string _ArtWorkTitle,
+                            string _Description,
+                            string _ArtWorkDate,
+                            address _newOwner
+                            ){
+                            CertificateOrigin = _ArtGallery;
+                            identifier=_identifier;
+                            ArtistName=_ArtistName;
+                            ArtWorkTitle=_ArtWorkTitle;
+                            Description=_Description;
+                            ArtWorkDate=_ArtWorkDate;
+                            transferOwnership(_newOwner);
+                            }
 }
