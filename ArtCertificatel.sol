@@ -1,6 +1,6 @@
 pragma solidity ^0.4.10;
 /*
- * Ownable
+ * Artgallery
     /\__/\
    /`    '\
  === 0  0 ===
@@ -11,14 +11,16 @@ pragma solidity ^0.4.10;
  \  ||  ||  /
   \_oo__oo_/#######o
  */
-contract Ownable {
+
+contract ArtGallery{
+/*ownable : begin contract */
 /*Public variables*/
     address public owner;
     uint public LastChangeOfOwnership;
 /*events for log*/
     event ChangeOfOwnership(address newOwner); 
 /*construtor*/
-  function Ownable() {
+  function ArtGallery() {
     owner = msg.sender;
   }
 /* modifiers*/
@@ -37,23 +39,7 @@ contract Ownable {
       LastChangeOfOwnership = block.timestamp;
     }
   }
-
-}
-
-/*
- * Artgallery
-    /\__/\
-   /`    '\
- === 0  0 ===
-   \  --  /
-  /        \
- /          \
-|            |
- \  ||  ||  /
-  \_oo__oo_/#######o
- */
-
-contract ArtGallery is Ownable {
+/*ownable : end contract */
 
 /*Public variables*/
     address public Gallery = this;
@@ -144,7 +130,30 @@ if (ArtList[_identifier] == 0x0){throw;}
   \_oo__oo_/#######o
  */
 
-contract ArtCertificate is Ownable{
+contract ArtCertificate {
+/*ownable : begin contract */
+/*Public variables*/
+    address public owner;
+    uint public LastChangeOfOwnership;
+/*events for log*/
+    event ChangeOfOwnership(address newOwner); 
+/* modifiers*/
+  modifier onlyOwner() {
+    if (msg.sender != owner) {
+      throw;
+    }
+    _;
+  }
+/*methods*/
+
+  function transferOwnership(address _newOwner) onlyOwner {
+    if (_newOwner != address(0)) {
+      owner = _newOwner;
+      ChangeOfOwnership(owner);
+      LastChangeOfOwnership = block.timestamp;
+    }
+  }
+/*ownable : end contract */
 /*Public variables*/
     address public CertificateOrigin;
     bytes32 public identifier;
@@ -176,7 +185,7 @@ event ChangeOfIPFSmetadata(string newIPFSmetadata);
                             Description=_Description;
                             ArtWorkDate=_ArtWorkDate;
                             IPFSmetadata=_IPFSmetadata;
-                            transferOwnership(_newOwner);
+                            owner = _newOwner;
                             }
 
 /*methods*/
