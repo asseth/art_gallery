@@ -117,6 +117,7 @@ if (ArtList[_identifier] == 0x0){throw;}
                                                     _ArtWorkTitle,
                                                     _Description,
                                                     _ArtWorkDate,
+                                                    _IPFSmetadata,
                                                     _newOwner
                                                     );
            ArtList[_identifier] = _newArtCertificate;
@@ -140,19 +141,20 @@ if (ArtList[_identifier] == 0x0){throw;}
  */
 
 contract ArtCertificate is Ownable{
+/*Public variables*/
     address public CertificateOrigin;
     bytes32 public identifier;
     string public ArtistName;
     string public ArtWorkTitle;
     string public Description;
     string public ArtWorkDate;
-   
+    bytes32 public IPFSmetadata;
     // string public number of copy;
     // string public serial number;
-
-    /*
-    Methods
-    */
+    
+/*events for log*/
+event ChangeOfIPFSmetadata(bytes32 newIPFSmetadata); 
+/*construtor*/
     function ArtCertificate(
                             address _ArtGallery,
                             bytes32 _identifier,
@@ -160,7 +162,8 @@ contract ArtCertificate is Ownable{
                             string _ArtWorkTitle,
                             string _Description,
                             string _ArtWorkDate,
-                            address _newOwner
+                            address _newOwner,
+                            bytes32 _IPFSmetadata
                             ){
                             CertificateOrigin = _ArtGallery;
                             identifier=_identifier;
@@ -168,6 +171,14 @@ contract ArtCertificate is Ownable{
                             ArtWorkTitle=_ArtWorkTitle;
                             Description=_Description;
                             ArtWorkDate=_ArtWorkDate;
+                            IPFSmetadata=_IPFSmetadata;
                             transferOwnership(_newOwner);
                             }
+
+/*methods*/
+
+  function changeIPFS(bytes32 _newIPFSmetadata) onlyOwner {
+                             IPFSmetadata = _newIPFSmetadata;
+                             ChangeOfIPFSmetadata(IPFSmetadata);
+                                                             }
 }
