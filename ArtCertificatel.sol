@@ -81,10 +81,12 @@ function addArt(
                     string _ArtWorkTitle,
                     string _Description,
                     string _ArtWorkDate,
+                    string _IPFSmetadata, //need checksum for IPFS hash
                     address _newOwner
                     )  
                         onlyOwner() {
 /* verify if the identifier is not already mapped */
+
 if (ArtList[_identifier] != 0x0){throw;}
     address _newArtCertificate = new ArtCertificate(
                                                      Gallery,
@@ -93,6 +95,7 @@ if (ArtList[_identifier] != 0x0){throw;}
                                                     _ArtWorkTitle,
                                                     _Description,
                                                     _ArtWorkDate,
+                                                    _IPFSmetadata,
                                                     _newOwner
                                                     );
            ArtList[_identifier] = _newArtCertificate;
@@ -105,6 +108,7 @@ function changeArt(
                     string _ArtWorkTitle,
                     string _Description,
                     string _ArtWorkDate,
+                    string _IPFSmetadata,
                     address _newOwner
                     )  
                         onlyOwner() {
@@ -148,12 +152,12 @@ contract ArtCertificate is Ownable{
     string public ArtWorkTitle;
     string public Description;
     string public ArtWorkDate;
-    bytes32 public IPFSmetadata;
+    string public IPFSmetadata;
     // string public number of copy;
     // string public serial number;
     
 /*events for log*/
-event ChangeOfIPFSmetadata(bytes32 newIPFSmetadata); 
+event ChangeOfIPFSmetadata(string newIPFSmetadata); 
 /*construtor*/
     function ArtCertificate(
                             address _ArtGallery,
@@ -162,8 +166,8 @@ event ChangeOfIPFSmetadata(bytes32 newIPFSmetadata);
                             string _ArtWorkTitle,
                             string _Description,
                             string _ArtWorkDate,
-                            address _newOwner,
-                            bytes32 _IPFSmetadata
+                            string _IPFSmetadata,
+                            address _newOwner
                             ){
                             CertificateOrigin = _ArtGallery;
                             identifier=_identifier;
@@ -177,8 +181,10 @@ event ChangeOfIPFSmetadata(bytes32 newIPFSmetadata);
 
 /*methods*/
 
-  function changeIPFS(bytes32 _newIPFSmetadata) onlyOwner {
+  function changeIPFS(string _newIPFSmetadata) onlyOwner {
                              IPFSmetadata = _newIPFSmetadata;
                              ChangeOfIPFSmetadata(IPFSmetadata);
                                                              }
+
+
 }
